@@ -1,16 +1,8 @@
 package main
 
-import (
-	"log"
-
-	"domain.com/config"
-	"domain.com/server"
-)
+import "strconv"
 
 func main() {
-	err := server.Init()
-	if err != nil {
-		panic(err)
-	}
-	log.Fatal(server.Run(config.PORT))
+	r := GetRouter()
+	r.Run(":" + strconv.Itoa(API_SERVER_PORT))
 }
