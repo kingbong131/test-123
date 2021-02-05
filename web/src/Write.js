@@ -1,61 +1,61 @@
-import React, { Component } from 'react'; 
-import { Link } from 'react-router-dom'; 
-import axios from 'axios'; 
-import styled from 'styled-components'; 
-class Write extends Component { 
-    state = { 
-        title: '', 
-        content: '', 
-    }; 
-    postBoard = async () => { 
-        const { title, content } = this.state; 
-        const post = await axios.post('http://localhost:4000/board', { 
-            title, 
-            content, 
-        }); 
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import styled from 'styled-components';
+class Write extends Component {
+    state = {
+        title: '',
+        content: '',
+    };
+    postBoard = async () => {
+        const { title, content } = this.state;
+        const post = await axios.post('http://localhost:4000/board', {
+            title,
+            content,
+        });
         // alert('전송'); 
-        
-        this.setState({ 
-            title: '', 
-            content: '', 
-        }); 
-        console.log(post); 
-    }; 
-    handleChange = (e) => { 
-        const { name, value } = e.target; 
-        this.setState({ 
-            [name]: value, 
-        }); 
-    }; 
-    render() { 
-        return ( 
-        <Wrap> 
-            <h2>Write</h2> 
-            <p> 
-                <input 
-                type="text" 
-                name="title" 
-                onChange={this.handleChange} 
-                value={this.state.title} 
-            /> 
-            </p> 
-            <p> 
-                <textarea 
-                type="text" 
-                name="content" 
-                onChange={this.handleChange} 
-                value={this.state.content} 
-            /> 
-            </p> 
-            <Button> 
-                <button onClick={this.postBoard}>전송하기 </button> 
-                <Link to="/">목록</Link> 
-            </Button> 
-            <div>{JSON.stringify(this.state)}</div> 
-            </Wrap> 
-        ); 
-    } 
-} 
+
+        this.setState({
+            title: '',
+            content: '',
+        });
+        console.log(post);
+    };
+    handleChange = (e) => {
+        const { name, value } = e.target;
+        this.setState({
+            [name]: value,
+        });
+    };
+    render() {
+        return (
+            <Wrap>
+                <h2>Write</h2>
+                <p>
+                    <input
+                        type="text"
+                        name="title"
+                        onChange={this.handleChange}
+                        value={this.state.title}
+                    />
+                </p>
+                <p>
+                    <textarea
+                        type="text"
+                        name="content"
+                        onChange={this.handleChange}
+                        value={this.state.content}
+                    />
+                </p>
+                <Button>
+                    <button onClick={this.postBoard}>전송하기 </button>
+                    <Link to="/">목록</Link>
+                </Button>
+                <div>{JSON.stringify(this.state)}</div>
+            </Wrap>
+        );
+    }
+}
 
 //styling 
 const Wrap = styled.div` 
@@ -70,8 +70,8 @@ const Wrap = styled.div`
         height: 100px; 
         border: 1px solid #ccc; 
     } 
-    `; 
-    const Button = styled.div` 
+    `;
+const Button = styled.div` 
     border-top: 1px solid #eee; 
     padding: 20px; 
     button { 
@@ -95,6 +95,6 @@ const Wrap = styled.div`
     & > button + a { 
         margin-right: 5px; 
     }
-    `; 
-    
-    export default Write;
+    `;
+
+export default Write;

@@ -1,13 +1,13 @@
-import React, { Component } from 'react'; 
-import { Route } from 'react-router-dom'; 
-import List from './List'; 
-import Read from './Read'; 
-import Write from './Write'; 
+import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
+import List from './List';
+import Read from './Read';
+import Write from './Write';
 class App extends Component {
-   render() { 
-     return ( 
-     <div> 
-       {/* <div className="lnk"> 
+  render() {
+    return (
+      <div>
+        {/* <div className="lnk"> 
        <ul> 
          <li> 
            <Link to="/">List</Link> 
@@ -19,16 +19,16 @@ class App extends Component {
             <Link to="/write">Write</Link> 
           </li> 
         </ul> 
-        </div> */} 
-        <div className="route"> 
-        <Route exact path="/" component={List} /> 
-        <Route path="/read/:id?" component={Read} /> 
-        <Route path="/write" component={Write} /> 
-        </div> 
-        </div> 
-        ); 
-      } 
-    } 
-    
-  export default App;
+        </div> */}
+        <div className="route">
+          <Route exact path="/" component={List} />
+          <Route path="/read/:id?" component={Read} />
+          <Route path="/write" component={Write} />
+        </div>
+      </div>
+    );
+  }
+}
+
+export default App;
 
