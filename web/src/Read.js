@@ -14,8 +14,8 @@ class Read extends Component {
         //test JSON: 이 주소로 넣으면 오류 없음 
         //https://jsonplaceholder.typicode.com/todos/1 
         try {
-            // const id = 0; 
-            //test id const { id } = this.props.match.params; 
+            // const id = 0;
+            // test id const { id } = this.props.match.params; 
             console.log(id);
             const response = await axios.get(`http://localhost:4000/board/${id}`);
             this.setState({
