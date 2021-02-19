@@ -3,7 +3,7 @@ import Editor from '../../components/write/Editor';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeField, initialize } from '../../modules/write';
 
-const EditorContainer = () => {
+const EditorContainer   = () => {
   const dispatch = useDispatch();
   const { title, body } = useSelector(({ write }) => ({
     title: write.title,

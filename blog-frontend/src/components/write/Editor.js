@@ -4,6 +4,7 @@ import 'quill/dist/quill.bubble.css';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
+import './UploadBox.css';
 
 const EditorBlock = styled(Responsive)`
   /* 페이지 위 아래 여백 지정 */
@@ -31,15 +32,44 @@ const QuillWrapper = styled.div`
     left: 0px;
   }
 `;
+const QuillWrapper2 = styled.div`
+  /* 최소 크기 지정 및 padding 제거 */
+  .ql-editor {
+    padding: 0;
+    min-height: 320px;
+    font-size: 1.125rem;
+    line-height: 1.5;
+  }
+  .ql-editor.ql-blank::before {
+    left: 0px;
+  }
+`;
+const QuillWrapper3 = styled.div`
+  /* 최소 크기 지정 및 padding 제거 */
+  .ql-editor {
+    padding: 0;
+    min-height: 80px;
+    font-size: 1.125rem;
+    line-height: 1.5;
+  }
+  .ql-editor.ql-blank::before {
+    left: 0px;
+  }
+`;
+
 
 const Editor = ({ title, body, onChangeField }) => {
   const quillElement = useRef(null); // Quill을 적용할 DivElement를 설정
+  const quillElement2 = useRef(null); // Quill을 적용할 DivElement를 설정
+  const quillElement3 = useRef(null); // Quill을 적용할 DivElement를 설정
   const quillInstance = useRef(null); // Quill 인스턴스를 설정
+  const quillInstance2 = useRef(null); // Quill 인스턴스를 설정
+  const quillInstance3 = useRef(null); // Quill 인스턴스를 설정
 
   useEffect(() => {
     quillInstance.current = new Quill(quillElement.current, {
       theme: 'bubble',
-      placeholder: '내용을 작성하세요...',
+      placeholder: '영문 번역본',
       modules: {
         // 더 많은 옵션
         // https://quilljs.com/docs/modules/toolbar/ 참고
@@ -60,6 +90,55 @@ const Editor = ({ title, body, onChangeField }) => {
         onChangeField({ key: 'body', value: quill.root.innerHTML });
       }
     });
+
+    
+    quillInstance2.current = new Quill(quillElement2.current, {
+      theme: 'bubble',
+      placeholder: '영어 원문',
+      modules: {
+        // 더 많은 옵션
+        // https://quilljs.com/docs/modules/toolbar/ 참고
+        toolbar: [
+          [{ header: '1' }, { header: '2' }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          ['blockquote', 'code-block', 'link', 'image'],
+        ],
+      },
+    });
+
+    // quill에 text-change 이벤트 핸들러 등록
+    // 참고: https://quilljs.com/docs/api/#events
+    const quill2 = quillInstance2.current;
+    quill2.on('text-change', (delta, oldDelta, source) => {
+      if (source === 'user') {
+        onChangeField({ key: 'body', value: quill2.root.innerHTML });
+      }
+    });
+
+    quillInstance3.current = new Quill(quillElement3.current, {
+      theme: 'bubble',
+      placeholder: '느낀점',
+      modules: {
+        // 더 많은 옵션
+        // https://quilljs.com/docs/modules/toolbar/ 참고
+        toolbar: [
+          [{ header: '1' }, { header: '2' }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          ['blockquote', 'code-block', 'link', 'image'],
+        ],
+      },
+    });
+
+    // quill에 text-change 이벤트 핸들러 등록
+    // 참고: https://quilljs.com/docs/api/#events
+    const quill3 = quillInstance3.current;
+    quill3.on('text-change', (delta, oldDelta, source) => {
+      if (source === 'user') {
+        onChangeField({ key: 'body', value: quill3.root.innerHTML });
+      }
+    });
   }, [onChangeField]);
 
   const mounted = useRef(false);
@@ -67,6 +146,7 @@ const Editor = ({ title, body, onChangeField }) => {
     if (mounted.current) return;
     mounted.current = true;
     quillInstance.current.root.innerHTML = body;
+    quillInstance2.current.root.innerHTML = body;
   }, [body]);
 
   const onChangeTitle = e => {
@@ -80,9 +160,20 @@ const Editor = ({ title, body, onChangeField }) => {
         onChange={onChangeTitle}
         value={title}
       />
+      <div className="filebox bs3-primary">
+				<label for="image">사진 파일 업로드</label> 
+				<input type="file" id="image" accept=".gif, .jpg, .png, .jpeg" /> 
+			</div>
       <QuillWrapper>
         <div ref={quillElement} />
       </QuillWrapper>
+      <QuillWrapper2>
+        <div ref={quillElement2} />
+      </QuillWrapper2>
+      <QuillWrapper3>
+        <div ref={quillElement3} />
+      </QuillWrapper3>
+      <input type="file"></input>
     </EditorBlock>
   );
 };
